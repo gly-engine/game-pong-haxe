@@ -2,6 +2,12 @@ name: cd
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/*'
+      - '.github/workflows/CD.yml'
 
 permissions:
   contents: read
@@ -21,7 +27,6 @@ jobs:
         with:
           repository: gamelly/gly-engine
           ref: develop
-      
       - 
         uses: actions/checkout@master
         with:
@@ -31,8 +36,11 @@ jobs:
         with:
           luaVersion: '5.4'
       -
-        run:
-          docker run --rm -v $(pwd)/app -w /app haxe:4.3.6-bullseye haxe game/src/Game.hx --lua haxe/game.lua
+        run: |
+          docker run --rm -v $(pwd):/app -w /app/game/src haxe:4.3.6-bullseye haxe Game.hx --lua /app/haxe/game.lua
+      - 
+        run: |
+          sudo chmod 666 haxe/game.lua
       - 
         run: |
           ./cli.sh tool-haxe-build haxe/game.lua
