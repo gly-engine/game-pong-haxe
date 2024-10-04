@@ -31,8 +31,9 @@ jobs:
         with:
           luaVersion: '5.4'
       -
-        run:
-          docker run --rm -v $(pwd):/app -w /app haxe:4.3.6-bullseye haxe game/src/Game.hx --lua haxe/game.lua
+        run: |
+          docker run --rm -v $(pwd):/app -w /app haxe:4.3.6-bullseye find .
+          docker run --rm -v $(pwd):/app -w /app haxe:4.3.6-bullseye haxe ./game/src/Game.hx --lua haxe/game.lua
       - 
         run: |
           ./cli.sh tool-haxe-build haxe/game.lua
