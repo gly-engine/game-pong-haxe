@@ -7,9 +7,8 @@ on:
       - main
       - develop
     paths:
-      - 'doxygen/*'
-      - '!doxygen/README.md'
-      - '.github/workflows/doxygen.yml'
+      - 'src/*'
+      - '.github/workflows/CD.yml'
 
 permissions:
   contents: read
