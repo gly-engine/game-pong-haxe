@@ -41,7 +41,9 @@ jobs:
           docker run --rm -v $(pwd):/app -w /app/game/src haxe:4.3.6-bullseye haxe Game.hx --lua /app/haxe/game.lua
       - 
         run: |
-          find haxe
+          chmod +w haxe/game.lua
+      - 
+        run: |
           ./cli.sh tool-haxe-build haxe/game.lua
       - 
         run: |
