@@ -1,6 +1,7 @@
 name: cd
 
 on:
+  push:
   workflow_dispatch:
 
 permissions:
@@ -21,7 +22,6 @@ jobs:
         with:
           repository: gamelly/gly-engine
           ref: develop
-      
       - 
         uses: actions/checkout@master
         with:
@@ -30,6 +30,9 @@ jobs:
         uses: leafo/gh-actions-lua@v10
         with:
           luaVersion: '5.4'
+      -
+        run: |
+          find .
       -
         run:
           docker run --rm -v $(pwd)/app -w /app haxe:4.3.6-bullseye haxe game/src/Game.hx --lua haxe/game.lua
