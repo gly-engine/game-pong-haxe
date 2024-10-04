@@ -1,8 +1,15 @@
 name: cd
 
 on:
-  push:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'doxygen/*'
+      - '!doxygen/README.md'
+      - '.github/workflows/doxygen.yml'
 
 permissions:
   contents: read
@@ -32,8 +39,7 @@ jobs:
           luaVersion: '5.4'
       -
         run: |
-          docker run --rm -v $(pwd):/app -w /app haxe:4.3.6-bullseye find .
-          docker run --rm -v $(pwd):/app -w /app haxe:4.3.6-bullseye haxe ./game/src/Game.hx --lua haxe/game.lua
+          docker run --rm -v $(pwd):/app -w /app/game/src haxe:4.3.6-bullseye haxe Game.hx --lua /app/haxe/game.lua
       - 
         run: |
           ./cli.sh tool-haxe-build haxe/game.lua
