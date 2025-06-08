@@ -12,16 +12,15 @@ class Game {
         game.player_pos = game.height / 2 - game.player_size / 2;
         game.ball_pos_x = game.width / 2;
         game.ball_pos_y = game.height / 2;
-        game.ball_spd_x = 0.3;
-        game.ball_spd_y = 0.06;
+        game.ball_spd_x = 0.6;
+        game.ball_spd_y = 0.12;
         game.ball_size = 8;
     }
 
     public static function loop(std:Dynamic, game:Dynamic):Void {
-        var player_dir = std.math.dir(std.key.press.down - std.key.press.up);
-        game.player_pos = std.math.clamp(game.player_pos + (player_dir * 7), 0, game.height - game.player_size);
-        game.ball_pos_x += game.ball_spd_x * game.dt;
-        game.ball_pos_y += game.ball_spd_y * game.dt;
+        game.player_pos = std.math.clamp(game.player_pos + (std.key.axis.y * 7), 0, game.height - game.player_size);
+        game.ball_pos_x += game.ball_spd_x * std.delta;
+        game.ball_pos_y += game.ball_spd_y * std.delta;
 
         if (game.ball_pos_x >= (game.width - game.ball_size)) {
             game.ball_spd_x = -std.math.abs(game.ball_spd_x);
@@ -40,7 +39,7 @@ class Game {
                 game.ball_spd_x = std.math.abs(game.ball_spd_x) * 1.003;
                 game.score++;
             } else {
-                std.game.reset();
+                std.app.reset();
             }
         }
     }
@@ -50,9 +49,8 @@ class Game {
         std.draw.color(std.color.white);
         std.draw.rect(0, 4, game.player_pos, 8, game.player_size);
         std.draw.rect(0, game.ball_pos_x, game.ball_pos_y, game.ball_size, game.ball_size);
-        std.draw.font('Tiresias', 32);
-        std.draw.text(game.width / 4, 16, game.score);
-        std.draw.text(game.width / 4 * 3, 16, game.highscore);
+        std.text.put(20, 1, game.score);
+        std.text.put(60, 1, game.highscore);
     }
 
     public static function exit(std:Dynamic, game:Dynamic):Void {

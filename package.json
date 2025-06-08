@@ -1,0 +1,22 @@
+{
+  "name": "game-pong-haxe",
+  "author": "RodrigoDornelles",
+  "version": "0.1.1",
+  "args": {
+    "core": "html5",
+    "fengari": true,
+    "enginecdn": true
+  },
+  "scripts": {
+    "prebuild": "haxe --cwd src Game.hx -lua ../build/game.lua",
+    "build": "gly-cli build --core none build/game.lua",
+    "postbuild": "gly-cli meta package.json --infile source/engine/meta/html5/index.mustache --outfile dist/index.html"
+  },
+  "dependencies": {
+    "@gamely/gly-cli": "0.1.1",
+    "haxe": "^5.2.1"
+  },
+  "haxeDependencies": {
+    "haxe": "4.3.6"
+  }
+}
